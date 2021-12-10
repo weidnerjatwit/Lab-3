@@ -18,6 +18,10 @@ padChange_y = 0
 ball_x = 50
 ball_y = 50
 
+#speed of the ball
+ballChange_x = 6
+ballChange_y = 6
+
 
 #draws the paddle. Also restricts its movement between the edges
 #of the window.
@@ -29,7 +33,7 @@ def paddleClamp(screen,x,y):
     pygame.draw.rect(screen,"Green",[x,y,20,100])
 
     
-#main loop    
+#game's main loop    
 done = False
 clock=pygame.time.Clock()
 while not done:
@@ -49,9 +53,27 @@ while not done:
     
     pad_x += padChange_x
     pad_y += padChange_y
-  
+    
+    ball_x += ballChange_x
+    ball_y += ballChange_y
     
     screen.fill("Black")
+
+    #this handles the movement of the ball.
+    if ball_x<10:
+        ball_x=10
+        ball_change_x = ball_change_x * -1
+    elif ball_x>800:
+        ball_x=800
+        pygame(exit)
+    elif ball_y<10:
+        ball_y=10
+        ballChange_y = ballChange_y * -1
+#Ball Collision with paddle
+    elif ball_x>pad_x and ball_y<pad_x+50 and ball_x==20:
+        ballChange_y = ballChange_y * -1
+    elif ball_y>390:
+        ballChange_y = ballChange_y * -1
                        
     pygame.draw.rect(screen,"White",[ball_x,ball_y,15,15])
 
